@@ -60,18 +60,6 @@ procedure TCoreThread.Execute;
     inherited;
     repeat
       Synchronize(Self.ThreadMethod);
-      {    //unsafe work. vcl canvas crash;
-      QueryPerformanceCounter(F);
-      FT := F;
-      if FT = F then
-        try
-          Self.ThreadMethod;
-        except
-          inc(ErrorsCounter);
-          Synchronize(Self.ThreadMethod);
-          Continue
-        end;
-      }
       System.YieldProcessor;
       SleepEx(Self.SleepInterval,False);
     until Terminated;
